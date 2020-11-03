@@ -1,0 +1,58 @@
+<button mat-raised-button (click)="isEditable = !isEditable">
+    {{!isEditable ? 'Enable edit mode' : 'Disable edit mode'}}
+  </button>
+  
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Datos del Speed Feedback</ng-template>
+        <mat-form-field>
+          <mat-label>Nombre del Equipo</mat-label>
+          <input matInput formControlName="firstCtrl" placeholder="Nombre del Equipo" required>
+        </mat-form-field>
+        <mat-form-field>  
+          <mat-label>Tiempo Dinámica</mat-label>
+          <mat-select  [(ngModel)]="selectedValue" name="time">
+            <mat-option *ngFor="let time of timeAvailable" [value]="time.value">
+              {{time.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Participantes</ng-template>
+        
+          <div formArrayName="participants">
+            <div *ngFor="let item of participants.controls; let nameIndex=index" [formGroupName]="nameIndex" >
+                <mat-form-field>
+                    <mat-label>Nombre del Participante: </mat-label>
+                    <input matInput type=text formControlName="name" />
+                
+                    <button mat-button matSuffix mat-icon-button (click)="deleteParticipants(nameIndex)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="button" (click)="addParticipants()">Agregar Participante</button>
+          </div>
+      </form>
+      {{ this.secondFormGroup.value | json }}
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button (click)="stepper.reset()">Limpiar Todo</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
