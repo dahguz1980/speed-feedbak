@@ -34,7 +34,8 @@ export class CaptureDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required]
+      firstCtrl: ['', Validators.required],
+      time: ['', Validators.required]
     });
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required],
