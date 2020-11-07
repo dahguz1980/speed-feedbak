@@ -1,11 +1,32 @@
 
 
 .mat-stepper-horizontal {
-    margin-top: 8px;
-    width: 80%;
+    margin-top: 25px;
   }
   
   .mat-form-field {
     width: 51%;
   }
+
+  section { 
+    margin: 0 auto;
+    width: 80%;
+    padding-bottom: 50px;
+  }
+
+#next {
+  margin-left: 10px;
+  margin-top:10px;
+}
+
+#back {
+  margin-top:10px;
+}
+
+#participants {
+  height: 100%;
+  scroll-behavior: auto;
+}
+
+
   

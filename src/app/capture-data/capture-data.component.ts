@@ -18,9 +18,7 @@ interface TimeForSpeedDate {
 export class CaptureDataComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  isEditable = false;
-
-  selectedValue: string;
+  isEditable = true;
 
   timeAvailable: TimeForSpeedDate[] = [
     {value: '30', viewValue: '30 minutos'},
@@ -30,15 +28,15 @@ export class CaptureDataComponent implements OnInit {
     {value: '120', viewValue: '120 minutos'}
   ];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required],
+      teamName: ['', Validators.required],
       time: ['', Validators.required]
     });
     this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required],
       participants: this.formBuilder.array([this.formBuilder.group({name: ''})])
     });
   }
@@ -53,6 +51,21 @@ export class CaptureDataComponent implements OnInit {
 
   deleteParticipants(index: any): void {
     this.participants.removeAt(index);
+  }
+
+  thereAreMoreThanOneParticipants(): boolean {
+    return this.participants.length > 1;
+  }
+
+  cleanParticipants(): void {
+    this.participants.clear();
+    this.participants.push(this.formBuilder.group({name: ''}));
+  }
+
+  prepareData(): any {
+    if (this.firstFormGroup.valid && this.secondFormGroup.valid){
+     return Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);
+    }
   }
 
 }
